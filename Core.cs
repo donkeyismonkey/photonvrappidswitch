@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using MelonLoader;
 
@@ -13,9 +14,9 @@ namespace PhotonVRAppIdSwitch
         private const string VoiceId = "838c89aa-44f7-4cf3-8e32-875636b6431f";
         private const BindingFlags All = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance;
 
+        private readonly Stopwatch timer = Stopwatch.StartNew();
         private Type managerType;
         private Type networkType;
-        private float nextCheck;
 
         public override void OnInitializeMelon()
         {
@@ -29,9 +30,8 @@ namespace PhotonVRAppIdSwitch
 
         public override void OnUpdate()
         {
-            nextCheck -= UnityEngine.Time.unscaledDeltaTime;
-            if (nextCheck > 0f) return;
-            nextCheck = 0.25f;
+            if (timer.ElapsedMilliseconds < 250) return;
+            timer.Restart();
             Apply();
         }
 
