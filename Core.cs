@@ -15,6 +15,11 @@ namespace PhotonVRAppIdSwitch
         private readonly Stopwatch timer = Stopwatch.StartNew();
         private bool done;
 
+        public override void OnInitializeMelon()
+        {
+            LoggerInstance.Msg("PhotonVRAppIdSwitch loaded");
+        }
+
         public override void OnUpdate()
         {
             if (done || timer.ElapsedMilliseconds < 10000) return;
